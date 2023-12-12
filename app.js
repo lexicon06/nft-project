@@ -22,34 +22,21 @@ app.get("/", (req, res) => {
   res.send({ message: "Hello World!" });
 });
 
-app.post("/api/v1/nft", (req, res) => {
+app.post("/api/v1/nft", async (req, res) => {
   try {
-    console.log(req);
+    console.log(req.body);
     const newId = nfts[nfts.length - 1].id + 1;
     const newNft = Object.assign({ id: newId }, req.body);
     nfts.push(newNft);
-    fs.writeFile(folder, JSON.stringify(nfts), (err) => {
-      if (err) {
-        console.log(err);
-        /*
-        demo
-  
-        {
-          "name": "Mona Lisa",
-          "description": "The Mona Lisa is a 16th century oil painting created by Leonardo da Vinci.",
-          "imageCover": "mona-lisa.jpg"
-        }
-        */
-        throw new Error("Something went wrong: " + err);
-      }
-    });
-    return res.send({
+    await fs.promises.writeFile(folder, JSON.stringify(nfts));
+    return res.status(201).send({
       status: "success",
       message: "NFT created successfully",
       data: newNft,
     });
   } catch (e) {
-    return res.send({
+    console.error(e);
+    return res.status(400).send({
       status: "error",
       message: e.message,
     });
