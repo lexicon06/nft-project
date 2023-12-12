@@ -4,7 +4,7 @@ import fs from "fs";
 import morgan from "morgan";
 
 const app = express();
-app.use(express.json()); //this is a middleware function from express instead using .json when sending data
+app.use(express.json());
 app.use(morgan("dev"));
 
 const currentDirectory = process.cwd();
@@ -15,6 +15,67 @@ const folder = path.join(
   "data",
   "nft-simple.json"
 );
+const uFolder = path.join(
+  currentDirectory,
+  "nft-data",
+  "data",
+  "nft-users.json"
+);
+
+//USERS
+
+const getAllUsers = async (req, res) => {
+  try {
+    const users = JSON.parse(await fs.promises.readFile(uFolder, "utf-8"));
+    res.status(200).send({
+      status: "success",
+      results: users.length,
+      data: users,
+    });
+  } catch (e) {
+    res.send(400).send({
+      status: "error",
+      message: e.message,
+    });
+  }
+};
+
+const getSingleUser = (res, req) => {
+  res.status(500).send({
+    status: "error",
+    message: "This route is not yet defined",
+  });
+};
+
+const createUser = (res, req) => {
+  res.status(500).send({
+    status: "error",
+    message: "This route is not yet defined",
+  });
+};
+
+const deleteUser = (res, req) => {
+  res.status(500).send({
+    status: "error",
+    message: "This route is not yet defined",
+  });
+};
+
+const updateUser = (res, req) => {
+  res.status(500).send({
+    status: "error",
+    message: "This route is not yet defined",
+  });
+};
+
+//USERS ROUTE
+
+app.route("/api/v1/users").get(getAllUsers).post(createUser);
+app
+  .route("/api/v1/users/:id")
+  .get(getSingleUser)
+  .patch(updateUser)
+  .delete(deleteUser);
 
 const nfts = JSON.parse(fs.readFileSync(folder, "utf-8"));
 
@@ -129,20 +190,6 @@ const getNFT = (req, res) => {
     data: nft,
   });
 };
-
-/*
-
-app.delete("/api/v1/nft/:id", deleteNFT);
-
-app.patch("/api/v1/nft/:id", patchNFT);
-
-app.get("/api/v1/nft/:id", getNFT);
-
-app.post("/api/v1/nft", postNFT);
-
-app.get("/api/v1/nft", getAllNFT);
-
-*/
 
 app.route("/api/v1/nft/:id").delete(deleteNFT).patch(patchNFT).get(getNFT);
 app.route("/api/v1/nft").get(getAllNFT).post(postNFT);
