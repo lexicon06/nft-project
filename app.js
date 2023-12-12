@@ -1,9 +1,11 @@
 import express from "express";
 import path from "path";
 import fs from "fs";
+import morgan from "morgan";
 
 const app = express();
 app.use(express.json()); //this is a middleware function from express instead using .json when sending data
+app.use(morgan("dev"));
 
 const currentDirectory = process.cwd();
 
