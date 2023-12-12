@@ -16,10 +16,73 @@ const folder = path.join(
 
 const nfts = JSON.parse(fs.readFileSync(folder, "utf-8"));
 
-//console.log(nft.length);
+app.delete("/api/v1/nft/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const nftIndex = nfts.find((nft) => nft.id == id);
+    if (nftIndex === -1) {
+      return res.status(404).send({
+        status: "error",
+        message: "NFT not found",
+      });
+    }
 
-app.get("/", (req, res) => {
-  res.send({ message: "Hello World!" });
+    nfts.splice(nftIndex, 1);
+    await fs.promises.writeFile(folder, JSON.stringify(nfts));
+
+    return res.status(200).send({
+      status: "success",
+      message: "NFT deleted successfully",
+    });
+  } catch (e) {
+    console.error(e);
+    if (e instanceof ClientError) {
+      return res.status(400).send({
+        status: "error",
+        message: e.message,
+      });
+    } else {
+      return res.status(500).send({
+        status: "error",
+        message: "Internal server error",
+      });
+    }
+  }
+});
+
+app.patch("/api/v1/nft/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const nft = nfts.find((nft) => nft.id == id);
+    if (!nft) {
+      return res.status(404).send({
+        status: "error",
+        message: "NFT not found",
+      });
+    }
+
+    const newNft = Object.assign(nft, req.body);
+    await fs.promises.writeFile(folder, JSON.stringify(nfts));
+
+    return res.status(200).send({
+      status: "success",
+      message: "NFT updated successfully",
+      data: newNft,
+    });
+  } catch (e) {
+    console.error(e);
+    if (e instanceof ClientError) {
+      return res.status(400).send({
+        status: "error",
+        message: e.message,
+      });
+    } else {
+      return res.status(500).send({
+        status: "error",
+        message: "Internal server error",
+      });
+    }
+  }
 });
 
 app.post("/api/v1/nft", async (req, res) => {
@@ -48,6 +111,20 @@ app.get("/api/v1/nft", (req, res) => {
     status: "success",
     results: nfts.length,
     data: nfts,
+  });
+});
+
+app.get("/api/v1/nft/:id", (req, res) => {
+  const nft = nfts.find((n) => n.id === parseInt(req.params.id));
+  if (!nft) {
+    return res.status(404).send({
+      status: "error",
+      message: "NFT not found",
+    });
+  }
+  return res.status(200).send({
+    status: "success",
+    data: nft,
   });
 });
 
