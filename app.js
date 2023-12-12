@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import fs from "fs";
 import morgan from "morgan";
+import router from "./routes/usersRoute.js";
 
 const app = express();
 app.use(express.json());
@@ -15,72 +16,10 @@ const folder = path.join(
   "data",
   "nft-simple.json"
 );
-const uFolder = path.join(
-  currentDirectory,
-  "nft-data",
-  "data",
-  "nft-users.json"
-);
 
-const userRouter = express.Router();
-app.use("/api/v1/users", userRouter);
+app.use("/api/v1/users", router);
 const nftRouter = express.Router();
 app.use("/api/v1/nfts", nftRouter);
-
-//USERS
-
-const getAllUsers = async (req, res) => {
-  try {
-    const users = JSON.parse(await fs.promises.readFile(uFolder, "utf-8"));
-    res.status(200).send({
-      status: "success",
-      results: users.length,
-      data: users,
-    });
-  } catch (e) {
-    res.send(400).send({
-      status: "error",
-      message: e.message,
-    });
-  }
-};
-
-const getSingleUser = (res, req) => {
-  res.status(500).send({
-    status: "error",
-    message: "This route is not yet defined",
-  });
-};
-
-const createUser = (res, req) => {
-  res.status(500).send({
-    status: "error",
-    message: "This route is not yet defined",
-  });
-};
-
-const deleteUser = (res, req) => {
-  res.status(500).send({
-    status: "error",
-    message: "This route is not yet defined",
-  });
-};
-
-const updateUser = (res, req) => {
-  res.status(500).send({
-    status: "error",
-    message: "This route is not yet defined",
-  });
-};
-
-//USERS ROUTE
-
-userRouter.route("/").get(getAllUsers).post(createUser);
-userRouter
-  .route("/:id")
-  .get(getSingleUser)
-  .patch(updateUser)
-  .delete(deleteUser);
 
 const nfts = JSON.parse(fs.readFileSync(folder, "utf-8"));
 
