@@ -22,6 +22,11 @@ const uFolder = path.join(
   "nft-users.json"
 );
 
+const userRouter = express.Router();
+app.use("/api/v1/users", userRouter);
+const nftRouter = express.Router();
+app.use("/api/v1/nfts", nftRouter);
+
 //USERS
 
 const getAllUsers = async (req, res) => {
@@ -70,9 +75,9 @@ const updateUser = (res, req) => {
 
 //USERS ROUTE
 
-app.route("/api/v1/users").get(getAllUsers).post(createUser);
-app
-  .route("/api/v1/users/:id")
+userRouter.route("/").get(getAllUsers).post(createUser);
+userRouter
+  .route("/:id")
   .get(getSingleUser)
   .patch(updateUser)
   .delete(deleteUser);
@@ -191,8 +196,8 @@ const getNFT = (req, res) => {
   });
 };
 
-app.route("/api/v1/nft/:id").delete(deleteNFT).patch(patchNFT).get(getNFT);
-app.route("/api/v1/nft").get(getAllNFT).post(postNFT);
+nftRouter.route("/:id").delete(deleteNFT).patch(patchNFT).get(getNFT);
+nftRouter.route("/").get(getAllNFT).post(postNFT);
 
 app.listen(3000, () => {
   console.log("Server running on port http://localhost:3000");
