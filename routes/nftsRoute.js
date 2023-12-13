@@ -1,15 +1,13 @@
 import express from "express";
-import {
-  getAllNFT,
-  getNFT,
-  postNFT,
-  patchNFT,
-  deleteNFT,
-} from "../controllers/nftControllers.js";
+import * as nftControllers from "../controllers/nftControllers.js";
 
 const router = express.Router();
 
-router.route("/:id").delete(deleteNFT).patch(patchNFT).get(getNFT);
-router.route("/").get(getAllNFT).post(postNFT);
+router
+  .route("/:id")
+  .delete(nftControllers.deleteNFT)
+  .patch(nftControllers.patchNFT)
+  .get(nftControllers.getNFT);
+router.route("/").get(nftControllers.getAllNFT).post(nftControllers.postNFT);
 
 export default router;
