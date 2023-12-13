@@ -10,6 +10,4 @@ app.use(morgan("dev"));
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/nfts", nftRouter);
 
-app.listen(3000, () => {
-  console.log("Server running on port http://localhost:3000");
-});
+export default app;
