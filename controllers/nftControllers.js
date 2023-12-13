@@ -124,4 +124,25 @@ const getNFT = (req, res) => {
   });
 };
 
-export { deleteNFT, patchNFT, postNFT, getAllNFT, getNFT };
+const checkId = (req, res, next, value) => {
+  if (req.params.id * 1 > nfts.length) {
+    return res.status(404).json({
+      status: "fail",
+      message: "Invalid ID",
+    });
+  }
+  console.log(`ID ${value}`);
+  next();
+};
+
+const checkBody = (req, res, next, value) => {
+  if (!req.body.name || !req.body.price) {
+    return res.status(404).json({
+      status: "fail",
+      message: "Missing name or price",
+    });
+  }
+  next();
+};
+
+export { deleteNFT, patchNFT, postNFT, getAllNFT, getNFT, checkId, checkBody };
