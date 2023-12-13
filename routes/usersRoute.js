@@ -12,8 +12,6 @@ const uFolder = path.join(
   "nft-users.json"
 );
 
-//USERS
-
 const getAllUsers = async (req, res) => {
   try {
     const users = JSON.parse(await fs.promises.readFile(uFolder, "utf-8"));
