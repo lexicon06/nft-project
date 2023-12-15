@@ -2,10 +2,17 @@ import express from "express";
 import morgan from "morgan";
 import usersRouter from "./routes/usersRoute.js";
 import nftRouter from "./routes/nftsRoute.js";
+import path from "path";
 
 const app = express();
 app.use(express.json());
 app.use(morgan("dev"));
+
+const currentDirectory = process.cwd();
+
+const folder = path.join(currentDirectory, "nft-data", "img");
+
+app.use(express.static(folder));
 
 const router = express.Router();
 
