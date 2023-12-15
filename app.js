@@ -15,6 +15,12 @@ router.param("id", (req, res, next, value) => {
   next();
 });
 
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  console.log(`Hello from the middleware: ${req.requestTime}`);
+  next();
+});
+
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/nfts", nftRouter);
 
