@@ -26,7 +26,7 @@ router.param("id", (req, res, next, value) => {
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
-  console.log(`Hello from the middleware: ${req.requestTime}`);
+  console.log(`Middleware request: ${req.requestTime}`);
   next();
 });
 
