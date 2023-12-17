@@ -103,7 +103,7 @@ const patchNFT = async (req, res) => {
 
 const postNFT = async (req, res) => {
   try {
-    if (req.body && req.body.name && req.body.rating && req.body.price) {
+    if (req.body) {
       const data = await NFT.create(req.body);
       data.save().catch((err) => {
         throw new Error(err);
