@@ -123,12 +123,16 @@ const postNFT = async (req, res) => {
   }
 };
 
-const getAllNFT = (req, res) => {
-  res.status(200).send({
-    status: "success",
-    results: nfts.length,
-    data: nfts,
-  });
+const getAllNFT = async (req, res) => {
+  try {
+    const data = await NFT.find();
+    res.status(200).send({
+      status: "success",
+      data: data,
+    });
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 const getNFT = (req, res) => {
