@@ -31,13 +31,13 @@ mongoose
   })
   .then((con) => {
     console.log(`DB connection successful ${con.connection.host}`);
-
-    app.listen(process.env.PORT, () => {
-      console.log("Server running on port http://localhost:3000");
-    }); //we only open our server if mongodb is connected successfully
   })
   .catch((err) => {
     console.log(err);
   });
 
 //console.log(process.env);
+
+app.listen(process.env.PORT, () => {
+  console.log("Server running on port http://localhost:3000");
+}); //we only open our server if mongodb is connected successfully

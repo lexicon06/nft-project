@@ -8,24 +8,33 @@ const nftData = JSON.parse(fs.readFileSync(dir, "utf-8"));
 
 console.log(nftData);
 
-const InsertData = async (req, res) => {
+const InsertData = async () => {
   try {
     if (nftData) {
       const data = await NFT.create(nftData);
       data.save().catch((err) => {
         throw new Error(err);
       });
-      res.status(201).send({
-        status: "success",
-        message: "NFT created successfully",
-        data: data,
-      });
+      console.log("Data successfully imported");
     } else {
       throw new Error("The data is required");
     }
   } catch (e) {
-    res.status(400).send({ error: e });
+    console.log(e);
   }
 };
 
-export default InsertData;
+const deleteData = async () => {
+  try {
+    await NFT.deleteMany();
+    console.log("Deleted all data");
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+if (process.argv[2] === "--import") {
+  InsertData();
+} else if (process.argv[2] === "--delete") {
+  deleteData();
+}

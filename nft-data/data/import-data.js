@@ -9,16 +9,10 @@ const DB = process.env.DATABASE.replace(
   process.env.DATABASE_PASSWORD
 );
 
-mongoose
-  .connect(DB, {
-    useCreateIndex: true,
-    useFindAndModify: false,
-    useNewUrlParser: true,
-  })
-  .then((con) => {
-    // console.log(con.connection);
-    console.log("DB Connection Successfully");
-  });
+mongoose.connect(DB).then((con) => {
+  // console.log(con.connection);
+  console.log("DB Connection Successfully");
+});
 
 const nfts = JSON.parse(
   fs.readFileSync(`${__dirname}/nft-simple.json`, "utf-8")

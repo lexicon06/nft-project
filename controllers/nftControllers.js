@@ -1,7 +1,6 @@
 import path from "path";
 import fs from "fs";
 import NFT from "../models/nftModel.js";
-import InsertData from "../import-data.js";
 
 const currentDirectory = process.cwd();
 
@@ -125,14 +124,4 @@ const checkData = (req, res, next, value) => {
   next();
 };
 
-export {
-  deleteNFT,
-  patchNFT,
-  postNFT,
-  getAllNFT,
-  getNFT,
-  checkId,
-  checkBody,
-  InsertData,
-  checkData,
-};
+export { deleteNFT, patchNFT, postNFT, getAllNFT, getNFT, checkId, checkBody };

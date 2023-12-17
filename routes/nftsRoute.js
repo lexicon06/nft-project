@@ -15,8 +15,4 @@ router
   .get(nftControllers.getAllNFT)
   .post(nftControllers.checkBody, nftControllers.postNFT);
 
-router
-  .route("/insert")
-  .post(nftControllers.checkData, nftControllers.InsertData);
-
 export default router;
