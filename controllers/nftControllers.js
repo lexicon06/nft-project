@@ -124,4 +124,13 @@ const checkData = (req, res, next, value) => {
   next();
 };
 
-export { deleteNFT, patchNFT, postNFT, getAllNFT, getNFT, checkId, checkBody };
+export {
+  deleteNFT,
+  patchNFT,
+  postNFT,
+  getAllNFT,
+  getNFT,
+  checkId,
+  checkBody,
+  checkData,
+};

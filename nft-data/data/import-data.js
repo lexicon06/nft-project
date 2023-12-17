@@ -1,47 +1,47 @@
-const fs = require("fs");
-const dotenv = require("dotenv");
-const mongoose = require("mongoose");
-const NFT = require("./../../models/nftModel");
+import fs from "fs";
+import NFT from "../../models/nftModel.js";
+import path from "path";
 
-dotenv.config({ path: "./config.env" });
-const DB = process.env.DATABASE.replace(
-  "<PASSWORD>",
-  process.env.DATABASE_PASSWORD
-);
-
-mongoose.connect(DB).then((con) => {
-  // console.log(con.connection);
-  console.log("DB Connection Successfully");
-});
-
-const nfts = JSON.parse(
-  fs.readFileSync(`${__dirname}/nft-simple.json`, "utf-8")
-);
+const fdir = path.join("nft-data", "data", "nft-simple.json");
+const nfts = JSON.parse(fs.readFileSync(fdir, "utf-8"));
 
 //IMPORT DATA
-const importDate = async () => {
+const importData = async (req, res) => {
   try {
     await NFT.create(nfts);
-    console.log("DATA successfully Loaded");
-    process.exit();
+    res.status(201).json({
+      status: "success",
+      message: "DATA successfully imported",
+    });
   } catch (error) {
-    console.log(error);
+    res.status(400).json({
+      status: "fail",
+      message: error,
+    });
   }
 };
 
 //DELETE DATA
-const deleteData = async () => {
+const deleteData = async (req, res) => {
   try {
     await NFT.deleteMany();
     console.log("DATA successfully Deleted");
-    process.exit();
+    res.status(201).json({
+      status: "success",
+      message: "DATA successfully Deleted",
+    });
   } catch (error) {
-    console.log(error);
+    res.status(400).json({
+      status: "fail",
+      message: error,
+    });
   }
 };
 
-if (process.argv[2] === "--import") {
+/* if (process.argv[2] === "--import") {
   importDate();
 } else if (process.argv[2] === "--delete") {
   deleteData();
-}
+} */
+
+export { importData, deleteData };

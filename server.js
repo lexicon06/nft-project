@@ -23,18 +23,16 @@ testNFT
   });
 */
 
-mongoose
-  .connect(DB, {
-    userCreateIndex: true,
-    useFindAndModify: false,
-    useNewUrlParser: true,
-  })
-  .then((con) => {
-    console.log(`DB connection successful ${con.connection.host}`);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+const connectToMongo = async () => {
+  try {
+    await mongoose.connect(DB);
+    console.log("Connected to MongoDB!!!");
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+connectToMongo();
 
 //console.log(process.env);
 
