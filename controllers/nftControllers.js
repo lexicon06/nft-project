@@ -1,5 +1,6 @@
 import path from "path";
 import fs from "fs";
+import NFT from "../models/nftModel.js";
 
 const currentDirectory = process.cwd();
 
@@ -81,7 +82,7 @@ const patchNFT = async (req, res) => {
   }
 };
 
-const postNFT = async (req, res) => {
+/*const postNFT = async (req, res) => {
   try {
     console.log(req.body);
     const newId = nfts[nfts.length - 1].id + 1;
@@ -99,6 +100,26 @@ const postNFT = async (req, res) => {
       status: "error",
       message: e.message,
     });
+  }
+};*/
+
+const postNFT = async (req, res) => {
+  try {
+    if (req.body && req.body.name && req.body.rating && req.body.price) {
+      const data = await NFT.create(req.body);
+      data.save().catch((err) => {
+        throw new Error(err);
+      });
+      res.status(201).send({
+        status: "success",
+        message: "NFT created successfully",
+        data: data,
+      });
+    } else {
+      throw new Error("All fields are required");
+    }
+  } catch (e) {
+    res.status(400).send({ error: e });
   }
 };
 
