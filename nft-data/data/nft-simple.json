@@ -118,36 +118,5 @@
     "imageCover": "nft-9-cover.jpg",
     "images": ["nft-9-1.jpg", "nft-9-2.jpg", "nft-9-3.jpg"],
     "startDates": ["2021-12-16,10:00", "2022-01-16,10:00", "2022-12-12,10:00"]
-  },
-  {
-    "id": 9,
-    "name": "Mona Lisa",
-    "description": "The Mona Lisa is a 16th century oil painting created by Leonardo da Vinci.",
-    "imageCover": "mona-lisa.jpg"
-  },
-  {
-    "id": 10,
-    "name": "PacMan",
-    "description": "The pacman eats everything.",
-    "imageCover": "pacman.jpg"
-  },
-  {
-    "id": 11,
-    "name": "Left4Dead",
-    "description": "Zombie game very hot.",
-    "imageCover": "l4d.jpg"
-  },
-  {
-    "id": 12,
-    "name": "Resident Evil Revelations 2",
-    "description": "Zombie game very hot.",
-    "imageCover": "rerev2.jpg"
-  },
-  {
-    "id": 13,
-    "name": "Resident Evil Revelations 2",
-    "description": "Zombie game very hot.",
-    "imageCover": "rerev2.jpg"
-  },
-  { "id": 14 }
+  }
 ]

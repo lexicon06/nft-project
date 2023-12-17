@@ -1,6 +1,7 @@
 import path from "path";
 import fs from "fs";
 import NFT from "../models/nftModel.js";
+import InsertData from "../import-data.js";
 
 const currentDirectory = process.cwd();
 
@@ -27,37 +28,6 @@ const deleteNFT = async (req, res) => {
   } catch (e) {
     res.status(400).send({ error: e.message });
   }
-  /*try {
-    const id = req.params.id;
-    const nftIndex = nfts.find((nft) => nft.id == id);
-    if (nftIndex === -1) {
-      return res.status(404).send({
-        status: "error",
-        message: "NFT not found",
-      });
-    }
-
-    nfts.splice(nftIndex, 1);
-    await fs.promises.writeFile(folder, JSON.stringify(nfts));
-
-    return res.status(200).send({
-      status: "success",
-      message: "NFT deleted successfully",
-    });
-  } catch (e) {
-    console.error(e);
-    if (e instanceof ClientError) {
-      return res.status(400).send({
-        status: "error",
-        message: e.message,
-      });
-    } else {
-      return res.status(500).send({
-        status: "error",
-        message: "Internal server error",
-      });
-    }
-  }*/
 };
 
 const patchNFT = async (req, res) => {
@@ -79,27 +49,6 @@ const patchNFT = async (req, res) => {
     res.status(400).send({ error: e.message });
   }
 };
-
-/*const postNFT = async (req, res) => {
-  try {
-    console.log(req.body);
-    const newId = nfts[nfts.length - 1].id + 1;
-    const newNft = Object.assign({ id: newId }, req.body);
-    nfts.push(newNft);
-    await fs.promises.writeFile(folder, JSON.stringify(nfts));
-    return res.status(201).send({
-      status: "success",
-      message: "NFT created successfully",
-      data: newNft,
-    });
-  } catch (e) {
-    console.error(e);
-    return res.status(400).send({
-      status: "error",
-      message: e.message,
-    });
-  }
-};*/
 
 const postNFT = async (req, res) => {
   try {
@@ -166,4 +115,24 @@ const checkBody = (req, res, next, value) => {
   next();
 };
 
-export { deleteNFT, patchNFT, postNFT, getAllNFT, getNFT, checkId, checkBody };
+const checkData = (req, res, next, value) => {
+  if (!req.body) {
+    return res.status(404).json({
+      status: "fail",
+      message: "Missing args",
+    });
+  }
+  next();
+};
+
+export {
+  deleteNFT,
+  patchNFT,
+  postNFT,
+  getAllNFT,
+  getNFT,
+  checkId,
+  checkBody,
+  InsertData,
+  checkData,
+};
