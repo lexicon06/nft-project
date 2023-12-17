@@ -16,6 +16,19 @@ const nfts = JSON.parse(fs.readFileSync(folder, "utf-8"));
 const deleteNFT = async (req, res) => {
   try {
     const id = req.params.id;
+
+    const result = await NFT.findByIdAndDelete(id);
+
+    if (!result) throw new Error("NFT not found");
+    else
+      res
+        .status(200)
+        .send({ status: "success", message: "NFT deleted successfully" });
+  } catch (e) {
+    res.status(400).send({ error: e.message });
+  }
+  /*try {
+    const id = req.params.id;
     const nftIndex = nfts.find((nft) => nft.id == id);
     if (nftIndex === -1) {
       return res.status(404).send({
@@ -44,7 +57,7 @@ const deleteNFT = async (req, res) => {
         message: "Internal server error",
       });
     }
-  }
+  }*/
 };
 
 const patchNFT = async (req, res) => {
@@ -135,18 +148,16 @@ const getAllNFT = async (req, res) => {
   }
 };
 
-const getNFT = (req, res) => {
-  const nft = nfts.find((n) => n.id === parseInt(req.params.id));
-  if (!nft) {
-    return res.status(404).send({
-      status: "error",
-      message: "NFT not found",
+const getNFT = async (req, res) => {
+  try {
+    const data = await NFT.findById(req.params.id);
+    res.status(200).send({
+      status: "success",
+      data: data,
     });
+  } catch (e) {
+    res.status(400).send({ error: e.message });
   }
-  return res.status(200).send({
-    status: "success",
-    data: nft,
-  });
 };
 
 const checkId = (req, res, next, value) => {
