@@ -25,9 +25,9 @@ const nftSchema = new mongoose.Schema({
 const NFT = mongoose.model("NFT", nftSchema);
 
 const testNFT = new NFT({
-  name: "Pac-Man",
-  rating: 9.5,
-  price: 1045,
+  name: "Hercules",
+  rating: 5.5,
+  price: 585,
 });
 
 testNFT
