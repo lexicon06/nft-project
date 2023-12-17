@@ -25,9 +25,9 @@ const nftSchema = new mongoose.Schema({
 const NFT = mongoose.model("NFT", nftSchema);
 
 const testNFT = new NFT({
-  name: "Jojo's Bizzare Adventure",
-  rating: 7.8,
-  price: 515,
+  name: "Pac-Man",
+  rating: 9.5,
+  price: 1045,
 });
 
 testNFT
