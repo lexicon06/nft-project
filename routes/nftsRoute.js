@@ -16,9 +16,8 @@ router
   .get(nftControllers.getAllNFT)
   .post(nftControllers.checkBody, nftControllers.postNFT);
 
-router
-  .route("/import")
-  .post(nftControllers.checkData, fileData.importData)
-  .delete(fileData.deleteData);
+router.route("/import").post(nftControllers.checkData, fileData.importData);
+
+router.route("/deleteAll").delete(fileData.deleteData);
 
 export default router;
