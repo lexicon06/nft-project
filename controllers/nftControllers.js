@@ -63,35 +63,20 @@ const deleteNFT = async (req, res) => {
 const patchNFT = async (req, res) => {
   try {
     const id = req.params.id;
-    const nft = nfts.find((nft) => nft.id == id);
-    if (!nft) {
-      return res.status(404).send({
-        status: "error",
-        message: "NFT not found",
-      });
-    }
 
-    const newNft = Object.assign(nft, req.body);
-    await fs.promises.writeFile(folder, JSON.stringify(nfts));
-
-    return res.status(200).send({
-      status: "success",
-      message: "NFT updated successfully",
-      data: newNft,
+    const result = await NFT.findByIdAndUpdate(id, req.body, {
+      new: true,
     });
+
+    if (!result) throw new Error("NFT not found");
+    else
+      res.status(200).send({
+        status: "success",
+        message: "NFT updated successfully",
+        data: result,
+      });
   } catch (e) {
-    console.error(e);
-    if (e instanceof ClientError) {
-      return res.status(400).send({
-        status: "error",
-        message: e.message,
-      });
-    } else {
-      return res.status(500).send({
-        status: "error",
-        message: "Internal server error",
-      });
-    }
+    res.status(400).send({ error: e.message });
   }
 };
 
