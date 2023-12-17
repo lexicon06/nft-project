@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.param("id", nftControllers.checkId);
 
+router.route("/deleteAll").delete(fileData.deleteData);
+
 router
   .route("/:id")
   .delete(nftControllers.deleteNFT)
@@ -17,7 +19,5 @@ router
   .post(nftControllers.checkBody, nftControllers.postNFT);
 
 router.route("/import").post(nftControllers.checkData, fileData.importData);
-
-router.route("/deleteAll").delete(fileData.deleteData);
 
 export default router;
