@@ -68,10 +68,34 @@ const postNFT = async (req, res) => {
     res.status(400).send({ error: e });
   }
 };
-
+/* 
 const getAllNFT = async (req, res) => {
   try {
     const data = await NFT.find();
+    res.status(200).send({
+      status: "success",
+      data: data,
+    });
+  } catch (e) {
+    console.error(e);
+  }
+}; */
+
+const getAllNFT = async (req, res) => {
+  try {
+    /* const data = await NFT.find({
+      difficulty: "easy",
+      duration: 5,
+    }); */
+
+    /* const data = await NFT.find()
+      .where("difficulty")
+      .equals("easy")
+      .where("duration")
+      .equals(5); */
+
+    /* const data = await NFT.find(req.query); */
+
     res.status(200).send({
       status: "success",
       data: data,

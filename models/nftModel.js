@@ -4,7 +4,7 @@ const nftSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Plase enter a name"],
+      required: [true, "Please enter a name"],
       unique: true,
       trim: true,
     },
