@@ -19,7 +19,7 @@ app.use(express.static(folder));
 const router = express.Router();
 
 router.param("id", (req, res, next, value) => {
-  //req.id = value;
+  req.id = value;
   console.log(`ID ${value}`);
   next();
 });
