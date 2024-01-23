@@ -98,7 +98,7 @@ const getAllNFT = async (req, res) => {
 
     res.status(200).send({
       status: "success",
-      data: data,
+      data: nfts,
     });
   } catch (e) {
     console.error(e);
